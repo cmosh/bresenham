@@ -1,5 +1,5 @@
-# Retain
-> hello
+# Bresenham's Algorithim in js
+> https://bresenham.makamara.me
 
 ### Usage
 - Clone or fork this repository
