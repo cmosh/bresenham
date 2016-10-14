@@ -143,6 +143,7 @@ export class Graph  {
       var line: Data = {
         fnType:fnType,
         graphType:graphType,
+        color:this.genColor(),
         points:[
           [this.coord.x0,this.coord.y0],
           [this.coord.xn,this.coord.yn]
@@ -163,8 +164,8 @@ export class Graph  {
           pointstop.push([point[0]+1,point[1]+1]);         
        }
 
-         var datapointbottom: Data = {points:pointsbottom,fnType:fnType,graphType:graphType}
-         var datapointtop: Data = {points:pointstop,fnType:fnType,graphType:graphType}
+         var datapointbottom: Data = {points:pointsbottom,color:this.genColor(),fnType:fnType,graphType:graphType}
+         var datapointtop: Data = {points:pointstop,color:this.genColor(),fnType:fnType,graphType:graphType}
 
          data.push(datapointtop);
          data.push(datapointbottom);
@@ -201,6 +202,7 @@ export class Graph  {
                   label: 'y - axis',
                   domain: domainy
                 },
+              grid: true,
               data: data,
               
             })
