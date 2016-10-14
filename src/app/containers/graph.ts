@@ -137,11 +137,12 @@ export class Graph  {
      genBlocks(points: Array<Array<number>>): Data[] {
 
       var data: Data[] = [];
-
+      var fnType: string = 'points';
+      var graphType: string = 'polyline';
 
       var line: Data = {
-        fnType:'points',
-        graphType:'polyline',
+        fnType:fnType,
+        graphType:graphType,
         points:[
           [this.coord.x0,this.coord.y0],
           [this.coord.xn,this.coord.yn]
@@ -150,26 +151,24 @@ export class Graph  {
       }
        data.push(line);
 
-      for (let point of points) {
-        // console.log(point);
-        var x: number = point[0];
-        var y: number = point[1];
-        console.log([x,y]);
-     
-        var fnType = 'points';
-        var graphType = 'polyline';
-        var points = [
-                        [x, y],
-                        [x+1, y],
-                        [x+1, y+1],
-                        [x, y+1],
-                        [x, y],
-        ]
+        var pointsbottom: Array<Array<number>> = [];
+        var pointstop: Array<Array<number>> = [];
+       
+       for (let point of points){
+          pointsbottom.push(point);
+          pointsbottom.push([point[0]+1,point[1]]);
+          pointsbottom.push([point[0]+1,point[1]+1]);
+          pointstop.push(point);
+          pointstop.push([point[0],point[1]+1]);
+          pointstop.push([point[0]+1,point[1]+1]);         
+       }
 
-        var datapoint: Data = {points:points,fnType:fnType,graphType:graphType}
-        data.push(datapoint);
-      }
-      console.log(data);
+         var datapointbottom: Data = {points:pointsbottom,fnType:fnType,graphType:graphType}
+         var datapointtop: Data = {points:pointstop,fnType:fnType,graphType:graphType}
+
+         data.push(datapointtop);
+         data.push(datapointbottom);
+
       return data;
 
      }
