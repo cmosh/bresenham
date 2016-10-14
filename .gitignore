@@ -1,7 +1,7 @@
 /node_modules/
-/dist/
-!/dist/index.html
-!/dist/global.css
+/dist/*
+!dist/index.html
+!dist/global.css
 /npm-debug.log
 specs.js
 update_all_branches
