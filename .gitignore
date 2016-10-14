@@ -1,5 +1,5 @@
 /node_modules/
-/dist/*
+
 !dist/index.html
 !dist/global.css
 /npm-debug.log
