@@ -1,4 +1,4 @@
-# Retain
+# Bresenham's Algorithim in js
 > hello
 
 ### Usage
