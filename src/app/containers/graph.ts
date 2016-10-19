@@ -5,7 +5,7 @@ import * as d3 from 'd3';
 var functionPlot = require('function-plot');
 
 @Component({
-    selector:'graph-container',
+    selector: 'graph-container',
     styles: [`.graph {
   padding-top: 50px;
 }
@@ -27,7 +27,7 @@ var functionPlot = require('function-plot');
     }
 
 `],
-    template:`
+    template: `
     <div class="row center-xs graph">
       <div class="col-xs-6 creator">
       
@@ -88,7 +88,7 @@ var functionPlot = require('function-plot');
 
     
     </div>
-	`
+`
 })
 
 export class Graph  {    
@@ -110,24 +110,24 @@ export class Graph  {
         return '#' + ((rgb[0] << 16) + (rgb[1] << 8) + rgb[2]).toString(16);
     }
 
-    genPoints(x0,y0,xn,yn): Array<Array<number>> {
-   var dx: number = Math.abs(xn-x0);
-   var dy:number = Math.abs(yn-y0);
+    genPoints(x0, y0, xn, yn): Array<Array<number>> {
+   var dx: number = Math.abs(xn - x0);
+   var dy: number = Math.abs(yn - y0);
    var sx: number = x0 < xn ? 1 : -1;
-   var sy:number = y0 < yn ? 1 : -1;
-   var err = dx-dy;
-   var xi: number = parseInt(x0);
-   var yi: number = parseInt(y0);
+   var sy: number = y0 < yn ? 1 : -1;
+   var err = dx - dy;
+   var xi: number = parseInt(x0, 10);
+   var yi: number = parseInt(y0, 10);
    var points:  Array<Array<number>> = [];
   //  var i: number = 0;
-   while(true){
-     points.push([xi,yi]);
+   while (true) {
+     points.push([xi, yi]);
     //  console.log([xi,yi]);  // Do what you need to for this
     //  i++;
-     if ((xi==xn) && (yi==yn)) break;
-     var e2: number = 2*err;
-     if (e2 >-dy){ err = err - dy; xi  = xi + sx; }
-     if (e2 < dx){ err = err + dx; yi  = yi + sy; }
+     if ((xi == xn) && (yi == yn)) { break; }
+     var e2: number = 2 * err;
+     if (e2 > - dy) { err = err - dy; xi  = xi + sx; }
+     if (e2 < dx) { err = err + dx; yi  = yi + sy; }
    }
 
    return points;
@@ -141,15 +141,15 @@ export class Graph  {
       var graphType: string = 'polyline';
 
       var line: Data = {
-        fnType:fnType,
-        graphType:graphType,
-        color:this.genColor(),
-        points:[
-          [this.coord.x0,this.coord.y0],
-          [this.coord.xn,this.coord.yn]
+        fnType: fnType,
+        graphType: graphType,
+        color: this.genColor(),
+        points: [
+          [this.coord.x0, this.coord.y0],
+          [this.coord.xn, this.coord.yn]
         ]
      
-      }
+      };
        data.push(line);
 
         var pointsbottom: Array<Array<number>> = [];
@@ -157,15 +157,15 @@ export class Graph  {
        
        for (let point of points){
           pointsbottom.push(point);
-          pointsbottom.push([point[0]+1,point[1]]);
-          pointsbottom.push([point[0]+1,point[1]+1]);
+          pointsbottom.push([point[0] + 1, point[1]]);
+          pointsbottom.push([point[0] + 1, point[1] + 1]);
           pointstop.push(point);
-          pointstop.push([point[0],point[1]+1]);
-          pointstop.push([point[0]+1,point[1]+1]);         
+          pointstop.push([point[0], point[1] + 1]);
+          pointstop.push([point[0] + 1, point[1] + 1]);         
        }
 
-         var datapointbottom: Data = {points:pointsbottom,color:this.genColor(),fnType:fnType,graphType:graphType}
-         var datapointtop: Data = {points:pointstop,color:this.genColor(),fnType:fnType,graphType:graphType}
+         var datapointbottom: Data = {points: pointsbottom, color: this.genColor(), fnType: fnType, graphType: graphType};
+         var datapointtop: Data = {points: pointstop, color: this.genColor(), fnType: fnType, graphType: graphType};
 
          data.push(datapointtop);
          data.push(datapointbottom);
@@ -174,24 +174,31 @@ export class Graph  {
 
      }
 
-     getdomain(origin,end): Array<number>{
+     getdomain(origin, end): Array<number> {
 
-       return [parseInt(origin)-1,parseInt(end)+1];
+       if (origin < end ) {
+        return [parseInt(origin, 10) - 1, parseInt(end, 10) + 1];
+       }else if (origin > end) {
+        return [parseInt(end, 10) - 1, parseInt(origin, 10) + 1];
+       }else {
+        return [parseInt(origin, 10) - 1, parseInt(end, 10) + 1];
+       }
 
      }
-     onPlotGraph(){
+     onPlotGraph() {
 
 
-       const {x0,y0,xn,yn} = this.coord;
-        if (x0 && y0 && xn && yn ){
+       const {x0, y0, xn, yn} = this.coord;
+        if (x0 && y0 && xn && yn ) {
 
           // let points: Point[] = this.genPoints();
             // let gradient: number = (yn-y0)/(xn-x0);
-           var points = this.genPoints(x0,y0,xn,yn);
+           var points = this.genPoints(x0, y0, xn, yn);
            var data = this.genBlocks(points);
-           var domainx = this.getdomain(x0,xn);
-           var domainy = this.getdomain(y0,yn);
-
+           var domainx = this.getdomain(x0, xn);
+           var domainy = this.getdomain(y0, yn);
+           console.log("domain x:" + domainx);
+           console.log("domain y:" + domainy);
             functionPlot({
               target: '#plotarea',
                 xAxis: {
@@ -205,18 +212,11 @@ export class Graph  {
               grid: true,
               data: data,
               
-            })
+            });
 
               
 
           
-        }
-
-
-        
-            
-      
-        
+        }   
     }
-
 };
