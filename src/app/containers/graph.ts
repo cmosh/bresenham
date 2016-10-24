@@ -111,27 +111,25 @@ export class Graph  {
     }
 
     genPoints(x0, y0, xn, yn): Array<Array<number>> {
-   var dx: number = Math.abs(xn - x0);
-   var dy: number = Math.abs(yn - y0);
-   var sx: number = x0 < xn ? 1 : -1;
-   var sy: number = y0 < yn ? 1 : -1;
-   var err = dx - dy;
-   var xi: number = parseInt(x0, 10);
-   var yi: number = parseInt(y0, 10);
-   var points:  Array<Array<number>> = [];
-  //  var i: number = 0;
-   while (true) {
-     points.push([xi, yi]);
-    //  console.log([xi,yi]);  // Do what you need to for this
-    //  i++;
-     if ((xi == xn) && (yi == yn)) { break; }
-     var e2: number = 2 * err;
-     if (e2 > - dy) { err = err - dy; xi  = xi + sx; }
-     if (e2 < dx) { err = err + dx; yi  = yi + sy; }
-   }
+        var dx: number = Math.abs(xn - x0);
+        var dy: number = Math.abs(yn - y0);
+        var sx: number = x0 < xn ? 1 : -1;
+        var sy: number = y0 < yn ? 1 : -1;
+        var err = dx - dy;
+        var xi: number = parseInt(x0, 10);
+        var yi: number = parseInt(y0, 10);
+        var points:  Array<Array<number>> = [];
 
-   return points;
-
+        while (true) {
+           points.push([xi, yi]);
+          if ((xi === parseInt(xn, 10)) && (yi === parseInt(yn, 10))) { break; }
+          var e2: number = 2 * err;
+          console.log(dy);
+          if (e2 > - dy) { err = err - dy; xi  = xi + sx; }
+          if (e2 < dx) { err = err + dx; yi  = yi + sy; }        
+        }
+       
+        return points;
     }
 
      genBlocks(points: Array<Array<number>>): Data[] {
@@ -177,11 +175,11 @@ export class Graph  {
      getdomain(origin, end): Array<number> {
 
        if (origin < end ) {
-        return [parseInt(origin, 10) - 1, parseInt(end, 10) + 1];
+        return [parseInt(origin, 10) - 2, parseInt(end, 10) + 2];
        }else if (origin > end) {
-        return [parseInt(end, 10) - 1, parseInt(origin, 10) + 1];
+        return [parseInt(end, 10) - 2, parseInt(origin, 10) + 2];
        }else {
-        return [parseInt(origin, 10) - 1, parseInt(end, 10) + 1];
+        return [parseInt(origin, 10) - 2, parseInt(end, 10) + 2];
        }
 
      }

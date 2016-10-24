@@ -36,7 +36,7 @@ import { Component } from '@angular/core';
                 <div class="col-sm-12">
                     <div class="copyright">
                     <p> 
- Copyright &copy; 2016. Our Student no's 
+ Copyright &copy; 2016.
 
  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM0AAAD
  NCAMAAAAsYgRbAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5c
